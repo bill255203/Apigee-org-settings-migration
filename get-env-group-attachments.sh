@@ -24,8 +24,10 @@ envgroups=($(echo "$envgroups_json" | jq -c '.environmentGroups[]'))
 
 # Loop through each environment group and create them in the destination project
 for envgroup in "${envgroups[@]}"; do
+# Extract the environment group name
+  envgroup_name=$(echo "$envgroup" | jq -r '.name')
   # Make a GET request to list attachments associated with the environment group
-  attachments_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/envgroups/$envgroup_name/attachments" \
+  attachments_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/envgroups/$envgroup_name/attachments" \
     -H "Authorization: Bearer $SOURCE_TOKEN")
 
   # Save the response for attachments to a file

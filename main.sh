@@ -23,14 +23,25 @@ echo "DEST_ORG: $DEST_ORG"
 echo "DEST_ACCOUNT: $DEST_ACCOUNT"
 echo "DEST_DIR: $DEST_DIR"
 
-source ./get-env.sh
-source ./get-proxies.sh
-source ./get-developers.sh
-source ./get-products.sh
+# Define an array of script file names
+scripts=(
+  "env"
+  "env-group"
+  "env-group-attachments"
+  "proxies"
+  "developers"
+  "products"
+)
 
-source ./login.sh
+# Execute get scripts
+for script in "${scripts[@]}"; do
+  source "./get-$script.sh"
+done
 
-source ./get-env.sh
-source ./get-proxies.sh
-source ./post-developers.sh
-source ./post-products.sh
+# Run login script
+source "./login.sh"
+
+# Execute post scripts
+for script in "${scripts[@]}"; do
+  source "./post-$script.sh"
+done
