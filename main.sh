@@ -29,6 +29,7 @@ scripts=(
   "env-group"
   "env-group-attachments"
   "proxies"
+  "sharedflow"
   "developers"
   "products"
 )
@@ -45,3 +46,5 @@ source "./login.sh"
 for script in "${scripts[@]}"; do
   source "./post-$script.sh"
 done
+
+source "./extract_error_messages.sh"
