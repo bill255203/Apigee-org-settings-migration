@@ -20,10 +20,8 @@ environments=($(cat "$DEST_DIR/environments.json" | jq -r '.[]'))
 
 # Loop through each environment and perform GET and POST requests
 for environment in "${environments[@]}"; do
-  # Prepare the JSON payload for creating the environment in the destination project
-  json_payload='{
-    "name": "'"$environment"'"
-  }'
+  # Create the JSON payload using data from the environment details file
+  json_payload=$(cat "$DEST_DIR/${environment}_details.json")
 
   # Make a POST request to create the environment in the destination project
   create_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/environments" \

@@ -25,13 +25,17 @@ echo "DEST_DIR: $DEST_DIR"
 
 # Define an array of script file names
 scripts=(
+  "products"
+  "appgroup"
+  "appgroup-apps"
+  "developers"
+  "developers-apps"
+
   "env"
   "env-group"
   "env-group-attachments"
-  "proxies"
   "sharedflow"
-  "developers"
-  "products"
+  "proxies"
 )
 
 # Execute get scripts
