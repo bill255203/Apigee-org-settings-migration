@@ -4,7 +4,7 @@
 json_dir="/Users/liaopinrui/Downloads/"
 
 # Output JSON file in the same directory as the script
-output_file="$(dirname "$0")/error_message.json"
+output_file="$(dirname "$0")/post-err-msgs.json"
 
 # Truncate the output file to clear its content
 > "$output_file"
@@ -15,7 +15,9 @@ for json_file in "${json_dir}"*.json; do
   if [ "$json_file" != "$output_file" ]; then
     # Extract the error code from the JSON file using jq
     error_code=$(jq -r '.error.code' "$json_file")
-
+    error_message=$(jq -r '.error.message' "$json_file")
+    error_status=$(jq -r '.error.status' "$json_file")
+    
     # If error_code is null, set it to "null"
     if [ "$error_code" == "null" ]; then
       error_code="null"

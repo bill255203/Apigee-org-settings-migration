@@ -30,7 +30,7 @@ for envgroup in "${envgroups[@]}"; do
   envgroup_name=$(echo "$envgroup" | jq -r '.name')
 
   # Read the attachments file for the current environment group
-  attachments_file="$DEST_DIR${envgroup_name}_attachments.json"
+  attachments_file="$DEST_DIR${envgroup_name}_envgroup_attachments.json"
   
   # Check if the attachments file exists
   if [[ -f "$attachments_file" ]]; then
@@ -50,7 +50,7 @@ for envgroup in "${envgroups[@]}"; do
         -d "$attachment")
 
       # Save the response for the attachment to a file if needed
-      echo "$attachment_response" > "$DEST_DIR/${envgroup_name}_${attachment_name}_attachment.json"
+      echo "$attachment_response" > "$DEST_DIR/${envgroup_name}_${attachment_name}_envgroup_attachments_response.json"
 
       echo "Attachment for environment group $envgroup_name created."
     done < <(jq -c '.environmentGroupAttachments[]' "$attachments_file")

@@ -31,7 +31,7 @@ for envgroup in "${envgroups[@]}"; do
     -H "Authorization: Bearer $SOURCE_TOKEN")
 
   # Save the response for attachments to a file
-  echo "$attachments_response" > "$DEST_DIR/${envgroup_name}_attachments.json"
+  echo "$attachments_response" > "$DEST_DIR/${envgroup_name}_envgroup_attachments.json"
 
   echo "Attachments for environment group $envgroup_name saved."
 

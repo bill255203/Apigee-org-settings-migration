@@ -23,12 +23,13 @@ curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/sharedfl
 
 echo "Sharedflows list saved to $DEST_DIR/sharedflows.json"
 
-# Extract sharedflow names from the JSON file and iterate through them
-sharedflow_names=($(jq -r '.sharedFlows[].name' "$DEST_DIR/sharedflows.json"))
+# Parse the appIds as elements in an array
+IFS=$'\n' read -d '' -r -a sharedflow_names < <(jq -r '.sharedFlows[].name' "$DEST_DIR/sharedflows.json")
 
 for sharedflow_name in "${sharedflow_names[@]}"; do
+  transformed_name=$(echo "$sharedflow_name" | tr ' ' '+')
   # Make the API call to get details of the current sharedflow
-  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/sharedflows/$sharedflow_name/revisions" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/sharedflow_$sharedflow_name.json"
+  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/sharedflows/$transformed_name/revisions" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/sharedflow_$sharedflow_name.json"
   
   echo "Details for sharedflow $sharedflow_name saved to $DEST_DIR/sharedflow_$sharedflow_name.json"
 
@@ -37,7 +38,7 @@ for sharedflow_name in "${sharedflow_names[@]}"; do
 
   for revision_number in "${revision_numbers[@]}"; do
     # Make the API call to get details of the current sharedflow revision
-    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/sharedflows/$sharedflow_name/revisions/$revision_number?format=bundle" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/sharedflow_${sharedflow_name}_revision_${revision_number}.zip"
+    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/sharedflows/$transformed_name/revisions/$revision_number?format=bundle" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/sharedflow_${sharedflow_name}_revision_${revision_number}.zip"
     
     echo "Details for sharedflow $sharedflow_name revision $revision_number saved to $DEST_DIR/sharedflow_${sharedflow_name}_revision_${revision_number}.zip"
   done

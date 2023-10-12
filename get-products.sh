@@ -26,8 +26,9 @@ echo "API products list saved to $DEST_DIR/api_products.json"
 get_api_product_details() {
   local product_name="$1"
   echo "Retrieving details for API product: $product_name..."
-  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apiproducts/$product_name" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${product_name}_details.json"
-  echo "API product details saved to $DEST_DIR/${product_name}_details.json"
+  transformed_name=$(echo "$product_name" | tr ' ' '+')  # Replace space with plus
+  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apiproducts/$transformed_name" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${product_name}_product_details.json"
+  echo "API product details saved to $DEST_DIR/${product_name}_product_details.json"
 }
 
 # Parse the product names as elements in an array

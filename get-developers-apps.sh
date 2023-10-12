@@ -26,22 +26,24 @@ for email in "${emails[@]}"; do
   echo "Retrieving developer information for email: $email"
 
   # Make the API call to get detailed information for the developer and save it to a file
-  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/developers/$email/apps" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${email}_apps_info.json"
+  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/developers/$email/apps" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${email}_dev_apps_info.json"
 
   echo "Developer information for email $email apps has been retrieved."
   
-  # Extract the appIds from the JSON response for this email
-  appIds=($(jq -r '.app[].appId' "$DEST_DIR/${email}_apps_info.json"))
+  # Parse the appIds as elements in an array
+  IFS=$'\n' read -d '' -r -a appIds < <(jq -r '.app[].appId' "$DEST_DIR/${email}_dev_apps_info.json")
 
   # Loop through the appIds and make GET requests for each app
   for appId in "${appIds[@]}"; do
-    echo "Retrieving app information for appId: $appId"
+    # Replace spaces with plus signs in the appId for the API request
+    transformed_appId=$(echo "$appId" | tr ' ' '+')
+    
+    echo "Retrieving app information for appId: $appId (Transformed: $transformed_appId)"
 
     # Make the API call to get detailed information for the app and save it to a file
-    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/developers/$email/apps/$appId" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${email}_${appId}_info.json"
+    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/developers/$email/apps/$transformed_appId" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${email}_${appId}_dev_app_info.json"
 
     echo "App information for appId $appId has been retrieved."
   done
 done
-
 echo "Developer apps information retrieval and import completed."

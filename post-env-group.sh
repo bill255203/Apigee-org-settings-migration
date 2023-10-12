@@ -28,7 +28,7 @@ for envgroup in "${envgroups[@]}"; do
 
   # Save the response for the created environment group to a file
   envgroup_name=$(echo "$envgroup" | jq -r '.name')
-  echo "$create_response" > "$DEST_DIR/${envgroup_name}_create_response.json"
+  echo "$create_response" > "$DEST_DIR/${envgroup_name}_envgroup_response.json"
 
   echo "Environment group $envgroup_name created in the destination project."
 done

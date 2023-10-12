@@ -22,10 +22,10 @@ create_or_update_api_product() {
   echo "Creating or updating API product: $product_name..."
   curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/apiproducts" \
     -H "Authorization: Bearer $SOURCE_TOKEN" \
-    -o "$DEST_DIR/${product_name}_response.json" \
+    -o "$DEST_DIR/${product_name}_product_response.json" \
     -d @"$product_details_file" \
     -H "Content-Type: application/json"
-  echo "API product creation or update response saved to $DEST_DIR/${product_name}_response.json"
+  echo "API product creation or update response saved to $DEST_DIR/${product_name}_product_response.json"
 }
 
 # Parse the product names as elements in an array
@@ -33,7 +33,7 @@ IFS=$'\n' read -d '' -r -a product_names < <(jq -r '.apiProduct[].name' "$DEST_D
 
 # Loop through all API products and create or update them
 for product_name in "${product_names[@]}"; do
-  create_or_update_api_product "$product_name" "$DEST_DIR/${product_name}_details.json"
+  create_or_update_api_product "$product_name" "$DEST_DIR/${product_name}_product_details.json"
 done
 
 echo "API product operations completed."

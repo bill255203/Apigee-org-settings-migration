@@ -29,6 +29,6 @@ for name in $(echo "$response" | jq -r '.proxies[] | .name'); do
     deploy_url="https://apigee.googleapis.com/v1/organizations/$DEST_ORG/apis?name=${name}&action=import"
 
     # Perform the individual curl request to deploy the ZIP bundle
-    curl -X POST "$deploy_url" -H "Authorization: Bearer $DEST_TOKEN" -H "Content-Type: application/octet-stream" --data-binary @"$DEST_DIR/${name}_revision_${revision}.zip"
+    curl -X POST "$deploy_url" -H "Authorization: Bearer $DEST_TOKEN" -H "Content-Type: application/octet-stream" --data-binary @"$DEST_DIR/proxy_${name}_revision_${revision}.zip" -o "$DEST_DIR/proxy_${name}_revision_${revision}_response.json"
   done
 done

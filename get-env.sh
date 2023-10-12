@@ -19,12 +19,12 @@ echo "DEST_DIR in env.sh: $DEST_DIR"
 SOURCE_TOKEN=$(gcloud auth print-access-token)
 
 # Make the initial API call to list environments and save the response to a file
-curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/environments.json"
+curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/envs.json"
 
-echo "Environments list saved to $DEST_DIR/environments.json"
+echo "Environments list saved to $DEST_DIR/envs.json"
 
 # Parse the environment names from the response
-environments=($(cat "$DEST_DIR/environments.json" | jq -r '.[]'))
+environments=($(cat "$DEST_DIR/envs.json" | jq -r '.[]'))
 
 # Loop through each environment and perform GET and POST requests
 for environment in "${environments[@]}"; do
@@ -34,9 +34,9 @@ for environment in "${environments[@]}"; do
   get_env_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments/$environment" -H "Authorization: Bearer $SOURCE_TOKEN")
 
   # Save the response for the environment details to a file
-  echo "$get_env_response" > "$DEST_DIR/${environment}_details.json"
+  echo "$get_env_response" > "$DEST_DIR/${environment}_env_details.json"
 
-  echo "Environment details saved to $DEST_DIR/${environment}_details.json"
+  echo "Environment details saved to $DEST_DIR/${environment}_env_details.json"
 done
 
 echo "Environment operations completed."

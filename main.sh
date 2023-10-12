@@ -36,12 +36,18 @@ scripts=(
   "env-group-attachments"
   "sharedflow"
   "proxies"
+  "err-msgs"
 )
 
 # Execute get scripts
 for script in "${scripts[@]}"; do
   source "./get-$script.sh"
 done
+
+if [ $? -ne 0 ]; then
+  echo "Error condition detected in get-err-msgs.sh. Stopping execution."
+  exit 1  # Exit with a non-zero code to indicate an error
+fi
 
 # Run login script
 source "./login.sh"
@@ -51,4 +57,4 @@ for script in "${scripts[@]}"; do
   source "./post-$script.sh"
 done
 
-source "./extract_error_messages.sh"
+source "./scan-err-msgs.sh"

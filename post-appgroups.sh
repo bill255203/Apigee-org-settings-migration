@@ -23,7 +23,7 @@ for appgroup_name in "${appgroup_names[@]}"; do
   echo "Processing App Group: $appgroup_name"
   
   # Create the JSON payload using data from the environment details file
-  json_payload=$(cat "$DEST_DIR/${appgroup_name}_details.json")
+  json_payload=$(cat "$DEST_DIR/${appgroup_name}_appgroup_details.json")
   # Echo the JSON payload before making the POST request
   echo "JSON Payload:"
   echo "$json_payload"
@@ -34,9 +34,9 @@ for appgroup_name in "${appgroup_names[@]}"; do
   -H "Content-Type: application/json")
 
   # Save the response for the App Group details to a file
-  echo "$post_appgroup_response" > "$DEST_DIR/${appgroup_name}_details_response.json"
+  echo "$post_appgroup_response" > "$DEST_DIR/${appgroup_name}_appgroup_response.json"
 
-  echo "App Group details saved to $DEST_DIR/${appgroup_name}_details.json"
+  echo "App Group details saved to $DEST_DIR/${appgroup_name}_appgroup_response.json"
 
 done
 

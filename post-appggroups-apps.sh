@@ -40,8 +40,8 @@ for appgroup_name in "${appgroup_names[@]}"; do
       -d "$json_payload" \
       -H "Content-Type: application/json")
     # Save the response for the app details to a file
-    echo "$post_app_response" > "$DEST_DIR/${appgroup_name}_${name}_app_details_response.json"
+    echo "$post_app_response" > "$DEST_DIR/${appgroup_name}_${name}_app_response.json"
 
-    echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_details.json"
+    echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_response.json"
   done
 done

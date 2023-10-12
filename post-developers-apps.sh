@@ -20,14 +20,19 @@ emails=($(cat "$DEST_DIR/developers.json" | jq -r '.developer[].email'))
 
 # Loop through the developer emails and retrieve detailed information for each
 for email in "${emails[@]}"; do
-  # Extract the appIds from the JSON response for this email
-  appIds=($(jq -r '.app[].appId' "$DEST_DIR/${email}_apps_info.json"))
+  # Parse the appIds as elements in an array
+  IFS=$'\n' read -d '' -r -a appIds < <(jq -r '.app[].appId' "$DEST_DIR/${email}_dev_apps_info.json")
+  
+  # Check if appIds is empty or null and skip the loop if true
+  if [ -z "$appIds" ]; then
+    echo "No appIds found for email: $email. Skipping this loop."
+    continue
+  fi
 
   # Loop through the appIds and make GET requests for each app
   for appId in "${appIds[@]}"; do
-    echo "Retrieving app information for appId: $appId"
     # Create the JSON payload using data from the environment details file
-    json_payload=$(cat "$DEST_DIR/${email}_${appId}_info.json")
+    json_payload=$(cat "$DEST_DIR/${email}_${appId}_dev_app_info.json")
     # Echo the JSON payload before making the POST request
     echo "JSON Payload:"
     echo "$json_payload"
@@ -35,11 +40,15 @@ for email in "${emails[@]}"; do
     post_dev_app_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/apps"  \
       -H "Authorization: Bearer $DEST_TOKEN" \
       -d "$json_payload" \
-      -H "Content-Type: application/json")
+      --header 'Accept: application/json' \
+      -H "Content-Type: application/json") \
+      --compressed 
     # Save the response for the app details to a file
-    echo "$post_dev_app_response" > "$DEST_DIR/${email}_${appId}_app_details_response.json"
+    echo "$post_dev_app_response" > "$DEST_DIR/${email}_${appId}_dev_app_response.json"
 
-    echo "App details saved to $DEST_DIR/${email}_${appId}_app_details.json"
+    echo "App details saved to $DEST_DIR/${email}_${appId}_dev_app_response.json"
   done
+  # Clean the appIds array for this email
+  unset appIds
 done
 

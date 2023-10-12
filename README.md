@@ -13,7 +13,7 @@ Apigee migration implementation
 3. Execute `main.sh` to perform the following tasks:
    - Load configuration from `config.json`.
    - Execute various scripts to retrieve and process data.
-   - Generate error messages using `extract_error_messages.sh`.
+   - Generate error messages using `*-err-msgs.sh`.
 
 ## Configuration
 
@@ -48,7 +48,73 @@ Explain the configuration options in `config.json`:
 - Purpose: These scripts perform actions based on the retrieved data from the source project.
 - Usage: Explain that these scripts execute actions such as Apigee migration steps.
 
-#### Error Message Extraction (`extract_error_messages.sh`)
+#### Error Message Extraction (`*-err-msgs.sh`)
 
 - Purpose: Describe the purpose of the error message extraction script.
 - Usage: Explain that this script generates error messages and stores them in `error_message.json` for inspection.
+
+# API Endpoints README
+
+This document outlines the structure of the API endpoints, including available resources and their associated GET and POST requests.
+
+## Products
+
+- List: api_products.json
+- GET: ${product_name}\_product_details.json
+- POST: ${product_name}\_product_response.json
+
+## Appgroup
+
+- List: appgroups.json
+- GET: ${appgroup_name}\_appgroup_details.json
+- POST: ${appgroup_name}\_appgroup_response.json
+
+## Appgroup-Apps
+
+- List: appgroup.json
+- GET: ${appgroup_name}\_apps_details.json
+- GET: ${appgroup_name}\_app_details.json
+- POST: ${appgroup_name}\_app_response.json
+
+## Developers
+
+- List: developers.json
+- GET: ${email}\_developer_details.json
+- POST: ${email}\_developer_response.json
+
+## Developers-Apps
+
+- List: developers_apps.json
+- GET: ${email}\_dev_apps_info.json
+- GET: ${email}_${appId}\_dev_app_info.json
+- POST: ${email}_${appId}\_dev_app_response.json
+
+## Environments
+
+- List: envs.json
+- GET: ${environment}\_env_details.json
+- POST: ${environment}\_env_response.json
+
+## Env-Group
+
+- List: env_groups.json
+- POST: ${env_group_name}\_envgroup_response.json
+
+## Env-Group-Attachments
+
+- List: env_group_attachments.json
+- GET: ${envgroup_name}\_envgroup_attachments.json
+- POST: ${envgroup_name}\_envgroup_attachments_response.json
+
+## Sharedflow
+
+- List: sharedflows.json
+- GET: sharedflow\_${sharedflow_name}.json
+- GET: sharedflow*${sharedflow_name}\_revision*${revision_number}.zip
+- POST: sharedflow*${sharedflow_name}\_revision*${revision_number}\_response.json
+
+## Proxies
+
+- List: proxies.json
+- GET: proxy*${name}\_revision*${revision}.zip
+- POST: ${proxy_name}\_response.json
