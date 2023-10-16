@@ -29,20 +29,20 @@ for instance_name in "${instance_name[@]}"; do
     --header "Authorization: Bearer $SOURCE_TOKEN" \
     -o "$DEST_DIR/instance_${instance_name}_attachments_details.json"
 
-  # # Use jq to extract the 'name' values from the attachments and store them in an array called attachment_names
-  # attachment_names=($(jq -r '.attachments[].name' "$DEST_DIR/instance_${instance_name}_attachments_details.json"))
+  # Use jq to extract the 'name' values from the attachments and store them in an array called attachment_names
+  attachment_names=($(jq -r '.attachments[].name' "$DEST_DIR/instance_${instance_name}_attachments_details.json"))
 
-  # # Loop through the 'attachment_names'
-  # for attachment_name in "${attachment_names[@]}"; do
-  #   echo "Attachment Name: $attachment_name"
+  # Loop through the 'attachment_names'
+  for attachment_name in "${attachment_names[@]}"; do
+    echo "Attachment Name: $attachment_name"
     
-  #   # Make a GET request using the 'instance_name' and 'attachment_name' as part of the URL
-  #   curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/instances/$instance_name/attachments/$attachment_name" \
-  #     --header "Authorization: Bearer $SOURCE_TOKEN" \
-  #     -o "$DEST_DIR/instance_${instance_name}_attachment_${attachment_name}_details.json"
+    # Make a GET request using the 'instance_name' and 'attachment_name' as part of the URL
+    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/instances/$instance_name/attachments/$attachment_name" \
+      --header "Authorization: Bearer $SOURCE_TOKEN" \
+      -o "$DEST_DIR/instance_${instance_name}_attachment_${attachment_name}_details.json"
 
-  #   # Echo a message for each 'attachment_name'
-  #   echo "Details for attachment name $attachment_name have been retrieved."
-  # done
+    # Echo a message for each 'attachment_name'
+    echo "Details for attachment name $attachment_name have been retrieved."
+  done
 done
 

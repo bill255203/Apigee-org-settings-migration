@@ -21,25 +21,25 @@ SOURCE_TOKEN=$(gcloud auth print-access-token)
 curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/keyvaluemaps" \
   --header "Authorization: Bearer $SOURCE_TOKEN" \
   --header "Accept: application/json" \
-  -o "$DEST_DIR/instances.json" \
+  -o "$DEST_DIR/keyvaluemaps.json" \
   --compressed
 
-# Use jq to extract the 'name' values and store them in an array called instance_name
-keyvaluemaps=($(jq -r '.instances[].name' "$DEST_DIR/keyvaluemaps.json"))
+# Use jq to extract the 'name' values and store them in an array called keyvaluemap_name
+keyvaluemaps=($(jq -r '.keyvaluemaps[].name' "$DEST_DIR/keyvaluemaps.json"))
 
 ####################################################################################################
 
-# Loop through the 'instance_name'
+# Loop through the 'keyvaluemap_name'
 for keyvaluemap in "${keyvaluemaps[@]}"; do
-  echo "Instance Name: $keyvaluemap"
+  echo "keyvaluemap Name: $keyvaluemap"
   
-  # Make a GET request using the 'instance_name' as part of the URL
-  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/instances/$keyvaluemap/entries" \
+  # Make a GET request using the 'keyvaluemap_name' as part of the URL
+  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/keyvaluemaps/$keyvaluemap/entries" \
     --header "Authorization: Bearer $SOURCE_TOKEN" \
     -o "$DEST_DIR/keyvaluemap_${keyvaluemap}_entries_details.json"
 
-  # Echo a message for each 'instance_name'
-  echo "Details for instance name $keyvaluemap have been retrieved."
+  # Echo a message for each 'keyvaluemap_name'
+  echo "Details for keyvaluemap name $keyvaluemap have been retrieved."
 done
 
 
