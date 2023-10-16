@@ -1,6 +1,9 @@
 # Project Name
 
 Apigee migration implementation
+
+## Structure outline
+
 ![Alt text](image.png)
 
 ## Prerequisites
