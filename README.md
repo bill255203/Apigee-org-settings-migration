@@ -110,11 +110,11 @@ This document outlines the structure of the API endpoints, including available r
 
 - List: sharedflows.json
 - GET: sharedflow\_${sharedflow_name}.json
-- GET: sharedflow*${sharedflow_name}\_revision*${revision_number}.zip
-- POST: sharedflow*${sharedflow_name}\_revision*${revision_number}\_response.json
+- GET: sharedflow\_${sharedflow_name}\_revision\_${revision_number}.zip
+- POST: sharedflow\_${sharedflow_name}\_revision\_${revision_number}\_response.json
 
 ## Proxies
 
 - List: proxies.json
-- GET: proxy*${name}\_revision*${revision}.zip
-- POST: ${proxy_name}\_response.json
+- GET: proxy\_${proxy_name}\_revision\_${revision}.zip
+- POST: proxy\_${proxy_name}\_revision\_${revision}\_response.json
