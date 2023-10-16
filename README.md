@@ -1,6 +1,7 @@
 # Project Name
 
 Apigee migration implementation
+![Alt text](image.png)
 
 ## Prerequisites
 
