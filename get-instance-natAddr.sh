@@ -18,10 +18,10 @@ echo "DEST_DIR in env.sh: $DEST_DIR"
 SOURCE_TOKEN=$(gcloud auth print-access-token)
 
 # Use jq to extract the 'name' values and store them in an array called instance_name
-instance_name=($(jq -r '.instances[].name' "$DEST_DIR/instances.json"))
+instance_names=($(jq -r '.instances[].name' "$DEST_DIR/instances.json"))
 
 # Loop through the 'instance_name'
-for instance_name in "${instance_name[@]}"; do
+for instance_name in "${instance_names[@]}"; do
   echo "Instance Name: $instance_name"
   
   # Make a GET request using the 'instance_name' as part of the URL

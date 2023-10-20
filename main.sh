@@ -56,5 +56,3 @@ source "./login.sh"
 for script in "${scripts[@]}"; do
   source "./post-$script.sh"
 done
-
-source "./scan-err-msgs.sh"

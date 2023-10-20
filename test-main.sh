@@ -27,13 +27,14 @@ echo "DEST_DIR: $DEST_DIR"
 scripts=(
   "env"
   "developers"
-  "developers-attr"
-  "env-api-debugsessions"
+  "developers-attr"bok
+  # "env-api-debugsessions"
   "instances"
-  "instances-natAddr"
+  "instances-natAddr"bbok
   "instances-attachments"
-  "kvms"
+  "kvms"bbnone
   "reports"
+  "err-msgs"
 )
 
 # Execute get scripts

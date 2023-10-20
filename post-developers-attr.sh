@@ -28,7 +28,7 @@ for email in "${emails[@]}"; do
     echo "Name: $name"
 
     # Perform the HTTP request using the 'name' value
-    curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/attributes/$name" -H "Authorization: Bearer $DEST_TOKEN" -o "$DEST_DIR/${email}_developer_${name}_attr_details.json" -H "Content-Type: application/json"
+    curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/attributes/$name" -H "Authorization: Bearer $DEST_TOKEN" -o "$DEST_DIR/${email}_developer_${name}_attr_response.json" -H "Content-Type: application/json"
 
     echo "Details for name $name have been posted."
   done
