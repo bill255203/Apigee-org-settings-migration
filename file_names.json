@@ -1,0 +1,86 @@
+{
+  "Products": {
+    "List": "api_products.json",
+    "GET": "${product_name}_product_details.json",
+    "POST": "${product_name}_product_response.json"
+  },
+  "Appgroup": {
+    "List": "appgroups.json",
+    "GET": "${appgroup_name}_appgroup_details.json",
+    "POST": "${appgroup_name}_appgroup_response.json"
+  },
+  "Appgroup-Apps": {
+    "List": "appgroups.json",
+    "GET": "${appgroup_name}_apps_details.json",
+    "GET": "${appgroup_name}_${name}_app_details.json",
+    "POST": "${appgroup_name}_${name}_app_response.json"
+  },
+  "Developers": {
+    "List": "developers.json",
+    "GET": "${email}_developer_details.json",
+    "POST": "${email}_developer_response.json"
+  },
+  "Developers-Apps": {
+    "List": "developers.json",
+    "GET": "${email}_dev_apps_info.json",
+    "GET": "${email}_${appId}_dev_app_info.json",
+    "POST": "${email}_${appId}_dev_app_response.json"
+  },
+  "Environments": {
+    "List": "envs.json",
+    "GET": "${environment}_env_details.json",
+    "POST": "${environment}_env_response.json"
+  },
+  "Env-Group": {
+    "List": "envgroups.json",
+    "POST": "${env_group_name}_envgroup_response.json"
+  },
+  "Env-Group-Attachments": {
+    "List": "envgroups.json",
+    "GET": "${envgroup_name}_envgroup_attachments.json",
+    "POST": "${envgroup_name}_envgroup_attachments_response.json"
+  },
+  "Sharedflow": {
+    "List": "sharedflows.json",
+    "GET": "sharedflow_${sharedflow_name}.json",
+    "GET": "sharedflow_${sharedflow_name}_revision_${revision_number}.zip",
+    "POST": "sharedflow_${sharedflow_name}_revision_${revision_number}_response.json"
+  },
+  "Proxies": {
+    "List": "proxies.json",
+    "GET": "proxy_${proxy_name}_revision_${revision}.zip",
+    "POST": "proxy_${proxy_name}_revision_${revision}_response.json"
+  },
+  "developers-attr": {
+    "list": "developers.json",
+    "GET": "${email}_developer_attr_details.json",
+    "GET": "${email}_developer_${name}_attr_details.json",
+    "POST": "${email}_developer_${name}_attr_response.json"
+  },
+  "instances": {
+    "list": "instances.json",
+    "GET": "instance_${instance_name}_details.json",
+    "POST": "instance_${instance_name}_response.json"
+  },
+  "instances-natAddr": {
+    "list": "instances.json",
+    "GET": "instance_${instance_name}_natAddress_details.json",
+    "POST": "instance_${instance_name}_natAddress_response.json"
+  },
+  "instances-attachments": {
+    "list": "instances.json",
+    "GET": "instance_${instance_name}_attachments_details.json",
+    "GET": "instance_${instance_name}_attachments_${attachment_name}_details.json",
+    "POST": "instance_${instance_name}_attachments_${attachment_name}_response.json"
+  },
+  "kvms": {
+    "list": "keyvaluemaps.json",
+    "GET": "keyvaluemap_${keyvaluemap}_entries_details.json",
+    "POST": "keyvaluemap_${keyvaluemap}_entries_response.json"
+  },
+  "reports": {
+    "list": "reports.json",
+    "GET": "report_${report_name}_details.json",
+    "POST": "report_${report_name}_response.json"
+  }
+}
