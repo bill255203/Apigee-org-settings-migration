@@ -37,10 +37,10 @@ Explain the configuration options in `config.json`:
 
 - Purpose: To run the Additional Scripts below
 
-### Get Scripts (`get-*.sh`) : These scripts retrieve Apigee information from the source project.
+#### Get Scripts (`get-*.sh`) : These scripts retrieve Apigee information from the source project.
 
-### Login Script (`login.sh`) : Handles authentication and retrieves necessary credentials.
+#### Login Script (`login.sh`) : Handles authentication and retrieves necessary credentials.
 
-### Post Scripts (`post-*.sh`) : These scripts perform actions based on the retrieved data from the source project.
+#### Post Scripts (`post-*.sh`) : These scripts perform actions based on the retrieved data from the source project.
 
-### Error Message Extraction (`*-err-msgs.sh`) : generates error messages for inspection.
+#### Error Message Extraction (`*-err-msgs.sh`) : generates error messages for inspection.
