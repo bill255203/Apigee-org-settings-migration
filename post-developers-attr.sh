@@ -26,9 +26,9 @@ for email in "${emails[@]}"; do
   # Now you can loop through the 'name' values and perform an HTTP request for each 'name'
   for name in "${names[@]}"; do
     echo "Name: $name"
-
+    attr_info=$(cat "$DEST_DIR/${email}_developer_${name}_attr_details.json")
     # Perform the HTTP request using the 'name' value
-    curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/attributes/$name" -H "Authorization: Bearer $DEST_TOKEN" -o "$DEST_DIR/${email}_developer_${name}_attr_response.json" -H "Content-Type: application/json"
+    curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/attributes/$name" -H "Authorization: Bearer $DEST_TOKEN" -o "$DEST_DIR/${email}_developer_${name}_attr_response.json" -d "$attr_info" -H "Content-Type: application/json"
 
     echo "Details for name $name have been posted."
   done

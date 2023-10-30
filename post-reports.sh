@@ -24,7 +24,7 @@ for report_name in "${report_names[@]}"; do
   json_payload=$(cat "$DEST_DIR/report_${report_name}_details.json")
 
   # Make a POST request to create the environment in the destination project
-  create_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/reports/${report_name}" \
+  create_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/reports" \
     -H "Authorization: Bearer $DEST_TOKEN" \
     -d "$json_payload" \
     -H "Content-Type: application/json")

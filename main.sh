@@ -29,6 +29,7 @@ scripts=(
   "appgroup"
   "appgroup-apps"
   "developers"
+  "developers-attr"
   "developers-apps"
 
   "env"
@@ -36,6 +37,7 @@ scripts=(
   "env-group-attachments"
   "sharedflow"
   "proxies"
+  "reports"
   "err-msgs"
 )
 

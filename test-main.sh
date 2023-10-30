@@ -25,15 +25,14 @@ echo "DEST_DIR: $DEST_DIR"
 
 # Define an array of script file names
 scripts=(
-  "env"
-  "developers"
-  "developers-attr"bok
+  # "env"
   # "env-api-debugsessions"
+  # "kvms"
+
   "instances"
-  "instances-natAddr"bbok
+  "instances-natAddr"
   "instances-attachments"
-  "kvms"bbnone
-  "reports"
+  
   "err-msgs"
 )
 
@@ -54,5 +53,3 @@ source "./login.sh"
 for script in "${scripts[@]}"; do
   source "./post-$script.sh"
 done
-
-source "./scan-err-msgs.sh"
