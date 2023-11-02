@@ -29,10 +29,11 @@ scripts=(
   # "env-api-debugsessions"
   # "kvms"
 
-  "instances"
-  "instances-natAddr"
-  "instances-attachments"
-  
+  # "instances"
+  # "instances-natAddr"
+  # "instances-attachments"
+  "env"
+  "env-keystores"
   "err-msgs"
 )
 

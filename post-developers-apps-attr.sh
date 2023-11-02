@@ -32,20 +32,20 @@ for email in "${emails[@]}"; do
   # Loop through the appIds and make GET requests for each app
   for appId in "${appIds[@]}"; do
     # Create the JSON payload using data from the environment details file
-    json_payload=$(cat "$DEST_DIR/${email}_${appId}_dev_app_info.json")
-    # Echo the JSON payload before making the POST request
-    echo "JSON Payload:"
-    echo "$json_payload"
-    # Make the API call to get detailed information for the app and save it to a file
-    post_dev_app_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/developers/$email/apps/${appId}"  \
-      -H "Authorization: Bearer $DEST_TOKEN" \
-      -d "$json_payload" \
-      --header 'Accept: application/json' \
-      -H "Content-Type: application/json")
-    # Save the response for the app details to a file
-    echo "$post_dev_app_response" > "$DEST_DIR/${email}_${appId}_dev_app_response.json"
+    devapp_attrs=($(jq -r '.attribute[].name' "$DEST_DIR/${email}_${appId}_dev_app_attrs.json"))
 
-    echo "App details saved to $DEST_DIR/${email}_${appId}_dev_app_response.json"
+    for devapp_attr in "${devapp_attrs[@]}"; do
+        json_payload=$(cat "$DEST_DIR/${email}_${appId}_dev_app_${devapp_attr}_attrs.json")
+        echo "$json_payload"
+        # Make the API call to get detailed information for the app and save it to a file
+        post_dev_app_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/developers/$email/apps/$appId/attributes/$devapp_attr"  \
+        -H "Authorization: Bearer $DEST_TOKEN" \
+        -d "$json_payload" \
+        --header 'Accept: application/json' \
+        -H "Content-Type: application/json")
+        # Save the response for the app details to a file
+        echo "$post_dev_app_response" > "$DEST_DIR/${email}_${appId}_dev_app_${devapp_attr}_attr_response.json"
+        echo "App details saved to $DEST_DIR/${email}_${appId}_dev_app_${devapp_attr}_attr_response.json"
   done
   # Clean the appIds array for this email
   unset appIds

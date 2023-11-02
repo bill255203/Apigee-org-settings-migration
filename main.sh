@@ -28,6 +28,7 @@ scripts=(
   "products"
   "appgroup"
   "appgroup-apps"
+  "datacollectors"
   "developers"
   "developers-attr"
   "developers-apps"

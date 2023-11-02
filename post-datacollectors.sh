@@ -24,7 +24,7 @@ for datacollector_name in "${datacollector_names[@]}"; do
   json_payload=$(cat "$DEST_DIR/datacollector_${datacollector_name}_details.json")
 
   # Make a POST request to create the environment in the destination project
-  create_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/datacollectors/${datacollector_name}" \
+  create_response=$(curl -X POST "https://apigee.googleapis.com/v1/organizations/$DEST_ORG/datacollectors" \
     -H "Authorization: Bearer $DEST_TOKEN" \
     -d "$json_payload" \
     -H "Content-Type: application/json")
