@@ -23,7 +23,7 @@ environments=($(cat "$DEST_DIR/envs.json" | jq -r '.[]'))
 
 # Loop through each environment and perform GET and POST requests
 for environment in "${environments[@]}"; do
-  keystore_names=($(cat "$DEST_DIR/${environment}_envs.json" | jq -r '.[]'))
+  keystore_names=($(cat "$DEST_DIR/${environment}_env_keystores_details.json" | jq -r '.[]'))
 
   for keystore in "${keystore_names[@]}"; do
     # Make a GET request to the keystore/{ks} endpoint for each keystore

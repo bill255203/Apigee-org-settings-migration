@@ -33,7 +33,18 @@ scripts=(
   # "instances-natAddr"
   # "instances-attachments"
   "env"
+  # "env-analytics-exp"
+  # "env-archiveDeployments"
+  # "env-queries"
+  # "env-refs"
+  # "env-resourcefiles"
+  # "env-securityActions"
+  # "env-securityReports"
+  # "env-sharedflows-deployments"
+  # "env-targetservers"
+  # "env-traceconfig-overrides"
   "env-keystores"
+  "env-keystores-aliases"
   "err-msgs"
 )
 

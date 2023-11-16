@@ -34,14 +34,14 @@ for environment in "${environments[@]}"; do
   echo "Environment details saved to $DEST_DIR/${environment}_references_details.json"
 
   # Extract the 'reference' values from the JSON response
-  references=($(cat "$DEST_DIR/${environment}_references_details.json" | jq -r '.attribute[].reference'))
+  references=($(cat "$DEST_DIR/${environment}_references_details.json" | jq -r '.[]'))
 
   # Now you can loop through the 'reference' values and perform an HTTP request for each 'reference'
   for reference in "${references[@]}"; do
     echo "reference: $reference"
 
     # Perform the HTTP request using the 'reference' value
-    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments/$environment/references/$reference" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${email}_developer_${reference}_reference_details.json"
+    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments/$environment/references/$reference" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${environment}_env_${reference}_reference_details.json"
 
     echo "Details for reference $reference have been retrieved."
   done
