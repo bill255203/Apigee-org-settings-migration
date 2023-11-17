@@ -22,7 +22,7 @@ SOURCE_TOKEN=$(gcloud auth print-access-token)
 response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis?includeRevisions=true" \
   --header "Authorization: Bearer $SOURCE_TOKEN" \
   --header "Accept: application/json" \
-  -o "$DEST_DIR/proxies.json" \
+  -o "$DEST_DIR/apis.json" \
   --compressed)
 
 # Debugging: Print the API response to the terminal
@@ -34,15 +34,15 @@ for name in $(echo "$response" | jq -r '.proxies[] | .name'); do
   # Extract and sort the revision numbers numerically
   revisions=($(echo "$response" | jq -r --arg name "$name" '.proxies[] | select(.name == $name).revision[]' | sort -n))
 
-  # Loop through the sorted revision numbers for each proxy name for GET requests
+  # Loop through the sorted revision numbers for each api name for GET requests
   for revision in "${revisions[@]}"; do
-    echo "Proxy Name: $name"
+    echo "api Name: $name"
     echo "Revision Number: $revision"
 
     # Construct the URL for the individual curl request to get the ZIP bundle
     url="https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis/$name/revisions/$revision?format=bundle"
 
     # Perform the individual curl request to download the ZIP bundle to the specified directory
-    curl -X GET "$url" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/proxy_${name}_revision_${revision}.zip"
+    curl -X GET "$url" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${name}_api_${revision}_revision.zip"
   done
 done

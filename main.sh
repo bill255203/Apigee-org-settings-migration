@@ -34,8 +34,8 @@ scripts=(
   "developers-apps"
 
   "env"
-  "env-group"
-  "env-group-attachments"
+  "envgroup"
+  "envgroup-attachments"
   "sharedflow"
   "proxies"
   "reports"

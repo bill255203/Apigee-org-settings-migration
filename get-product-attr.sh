@@ -47,7 +47,7 @@ for product in "${apiproducts[@]}"; do
     echo "$get_attr_response" > "$DEST_DIR/${product}_product_${attr}_attribute_details.json"
 
     echo "product details saved to $DEST_DIR/${product}_product_${attr}_attribute_details.json"
-
+    ###################################################################################################################
     echo "$get_rateplan_response" > "$DEST_DIR/${product}_product_rateplan_details.json"
 
     echo "product details saved to $DEST_DIR/${product}_product_rateplan_details.json"

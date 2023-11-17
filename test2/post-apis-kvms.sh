@@ -17,18 +17,17 @@ echo "DEST_DIR in env.sh: $DEST_DIR"
 
 # Loop through the downloaded ZIP bundles and deploy them with POST requests
 for name in $(echo "$response" | jq -r '.proxies[] | .name'); do
-  # Extract and sort the revision numbers numerically
-  revisions=($(echo "$response" | jq -r --arg name "$name" '.proxies[] | select(.name == $name).revision[]' | sort -n))
+  # Extract and sort the keyvaluemap numbers numerically
+  keyvaluemaps=($(echo "$response" | jq -r --arg name "$name" '.proxies[] | select(.name == $name).keyvaluemap[]' | sort -n))
 
-  # Loop through the sorted revision numbers for each proxy name for POST requests
-  for revision in "${revisions[@]}"; do
-    echo "Deploying Proxy Name: $name"
-    echo "Revision Number: $revision"
+  # Loop through the sorted keyvaluemap numbers for each proxy name for POST requests
+  for keyvaluemap in "${keyvaluemaps[@]}"; do
+    echo "keyvaluemap Number: $keyvaluemap"
 
     # Construct the URL for the individual curl request to deploy the ZIP bundle
-    deploy_url="https://apigee.googleapis.com/v1/organizations/$DEST_ORG/apis?name=${name}&action=import"
+    deploy_url="https://apigee.googleapis.com/v1/organizations/$DEST_ORG/apis/$name/keyvaluemaps/$keyvaluemap"
 
     # Perform the individual curl request to deploy the ZIP bundle
-    curl -X POST "$deploy_url" -H "Authorization: Bearer $DEST_TOKEN" -H "Content-Type: application/octet-stream" --data-binary @"$DEST_DIR/proxy_${name}_revision_${revision}.zip" -o "$DEST_DIR/proxy_${name}_revision_${revision}_response.json"
+    curl -X POST "$deploy_url" -H "Authorization: Bearer $DEST_TOKEN" -H "Content-Type: application/octet-stream" --data-binary @"$DEST_DIR/${name}_api_${keyvaluemap}_keyvaluemap.json" -o "$DEST_DIR/${name}_api_${keyvaluemap}_keyvaluemap_response.json"
   done
 done
