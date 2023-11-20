@@ -34,7 +34,7 @@ for environment in "${environments[@]}"; do
   get_env_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/environments/$environment" -H "Authorization: Bearer $SOURCE_TOKEN")
 
   # Save the response for the environment details to a file
-  echo "$get_env_response" > "$DEST_DIR/${environment}_env_details.json"
+  echo "$get_env_response" >"$DEST_DIR/${environment}_env_details.json"
 
   echo "Environment details saved to $DEST_DIR/${environment}_env_details.json"
 done

@@ -22,7 +22,7 @@ SOURCE_TOKEN=$(gcloud auth print-access-token)
 response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis?includeRevisions=true" \
   --header "Authorization: Bearer $SOURCE_TOKEN" \
   --header "Accept: application/json" \
-  -o "$DEST_DIR/apis.json" \
+  -o "$DEST_DIR/api-revisions.json" \
   --compressed)
 
 # Debugging: Print the API response to the terminal

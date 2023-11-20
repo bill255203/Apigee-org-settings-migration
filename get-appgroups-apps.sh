@@ -29,24 +29,24 @@ for appgroup_name in "${appgroup_names[@]}"; do
   get_appgroup_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/appgroups/$appgroup_name/apps" -H "Authorization: Bearer $SOURCE_TOKEN")
 
   # Save the response for the App Group details to a file
-  echo "$get_appgroup_response" > "$DEST_DIR/${appgroup_name}_apps_details.json"
+  echo "$get_appgroup_response" >"$DEST_DIR/${appgroup_name}_apps_details.json"
 
   echo "App Group details saved to $DEST_DIR/${appgroup_name}_apps_details.json"
   # Parse the app IDs from the app details JSON file using jq
-    names=($(jq -r '.appGroupApps[].name' "$DEST_DIR/${appgroup_name}_apps_details.json"))
+  names=($(jq -r '.appGroupApps[].name' "$DEST_DIR/${appgroup_name}_apps_details.json"))
 
-    # Loop through each app ID and perform GET requests
-    for name in "${names[@]}"; do
-      echo "Getting details for App ID: $name"
+  # Loop through each app ID and perform GET requests
+  for name in "${names[@]}"; do
+    echo "Getting details for App ID: $name"
 
-      # Make a GET request to get app details
-      get_app_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/appgroups/$appgroup_name/apps/$name" -H "Authorization: Bearer $SOURCE_TOKEN")
+    # Make a GET request to get app details
+    get_app_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/appgroups/$appgroup_name/apps/$name" -H "Authorization: Bearer $SOURCE_TOKEN")
 
-      # Save the response for the app details to a file
-      echo "$get_app_response" > "$DEST_DIR/${appgroup_name}_${name}_app_details.json"
+    # Save the response for the app details to a file
+    echo "$get_app_response" >"$DEST_DIR/${appgroup_name}_${name}_app_details.json"
 
-      echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_details.json"
-    done
+    echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_details.json"
+  done
 done
 
 echo "Appgroup Apps information retrieval and import completed."
