@@ -43,9 +43,9 @@ for appgroup_name in "${appgroup_names[@]}"; do
     get_app_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/appgroups/$appgroup_name/apps/$name" -H "Authorization: Bearer $SOURCE_TOKEN")
 
     # Save the response for the app details to a file
-    echo "$get_app_response" >"$DEST_DIR/${appgroup_name}_${name}_app_details.json"
+    echo "$get_app_response" >"$DEST_DIR/${appgroup_name}_appgroup_${name}_app_details.json"
 
-    echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_details.json"
+    echo "App details saved to $DEST_DIR/${appgroup_name}_appgroup_${name}_app_details.json"
   done
 done
 

@@ -25,14 +25,12 @@ curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/keyvalue
   --compressed
 
 # Use jq to extract the 'name' values and store them in an array called keyvaluemap_name
-keyvaluemaps=($(jq -r '.keyvaluemaps[].name' "$DEST_DIR/keyvaluemaps.json"))
-
-####################################################################################################
+keyvaluemaps=($(jq -r '.[]' "$DEST_DIR/keyvaluemaps.json"))
 
 # Loop through the 'keyvaluemap_name'
 for keyvaluemap in "${keyvaluemaps[@]}"; do
   echo "keyvaluemap Name: $keyvaluemap"
-  
+
   # Make a GET request using the 'keyvaluemap_name' as part of the URL
   curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/keyvaluemaps/$keyvaluemap/entries" \
     --header "Authorization: Bearer $SOURCE_TOKEN" \
@@ -40,16 +38,4 @@ for keyvaluemap in "${keyvaluemaps[@]}"; do
 
   # Echo a message for each 'keyvaluemap_name'
   echo "Details for keyvaluemap name $keyvaluemap have been retrieved."
-
-  entries=($(jq -r '.keyvaluemaps[].name' "$DEST_DIR/keyvaluemaps_${keyvaluemap}_entries_details.json"))
-
-  for entrie in "${entries[@]}"; do
-        # Make a GET request using the 'keyvaluemap_name' as part of the URL
-    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/keyvaluemaps/$keyvaluemap/entries/$entrie" \
-        --header "Authorization: Bearer $SOURCE_TOKEN" \
-        -o "$DEST_DIR/keyvaluemap_${keyvaluemap}_entries_${entrie}_details.json"
-
-  done
 done
-
-

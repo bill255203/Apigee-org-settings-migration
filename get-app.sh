@@ -28,7 +28,7 @@ app_ids=$(jq -r '.app[].appId' "$DEST_DIR/apps.json")
 
 for app_id in $app_ids; do
   # Make the API call for each app ID
-  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apps/$app_id" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/app_$app_id.json"
-  
+  curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apps/$app_id" -H "Authorization: Bearer $SOURCE_TOKEN" -o "$DEST_DIR/${app_id}_app_details.json"
+
   echo "App info for app ID $app_id saved to $DEST_DIR/app_$app_id.json"
 done

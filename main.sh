@@ -25,20 +25,24 @@ echo "DEST_DIR: $DEST_DIR"
 
 # Define an array of script file names
 scripts=(
-  "products"
-  "appgroup"
-  "appgroup-apps"
+  "apis"
+  "appgroups"
+  "appgroups-app"
+
   "datacollectors"
   "developers"
-  "developers-attr"
   "developers-apps"
+  "developers-apps-attr"
+  "developers-attr"
 
-  "env"
   "envgroup"
   "envgroup-attachments"
-  "sharedflow"
-  "proxies"
+  "env"
+  "env-keystores"
+  "env-refs"
+  "products"
   "reports"
+  "sharedflow"
   "err-msgs"
 )
 
@@ -49,7 +53,7 @@ done
 
 if [ $? -ne 0 ]; then
   echo "Error condition detected in get-err-msgs.sh. Stopping execution."
-  exit 1  # Exit with a non-zero code to indicate an error
+  exit 1 # Exit with a non-zero code to indicate an error
 fi
 
 # Run login script

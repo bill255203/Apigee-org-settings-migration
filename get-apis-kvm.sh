@@ -24,7 +24,7 @@ curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis" -H
 echo "apis list saved to $DEST_DIR/apis.json"
 
 # Parse the api names from the response
-apis=($(cat "$DEST_DIR/apis.json" | jq -r '.[]'))
+apis=($(cat "$DEST_DIR/apis.json" | jq -r '.proxies[].name'))
 
 # Loop through each api and perform GET and POST requests
 for api in "${apis[@]}"; do

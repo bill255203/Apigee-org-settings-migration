@@ -21,16 +21,15 @@ appgroup_names=($(jq -r '.appGroups[].name' "$DEST_DIR/appgroups.json"))
 # Loop through each appgroup and perform GET and POST requests
 for appgroup_name in "${appgroup_names[@]}"; do
   echo "Processing App Group: $appgroup_name"
-  
-  
-  # Parse the app IDs from the app details JSON file using jq
-    names=($(jq -r '.appGroupApps[].name' "$DEST_DIR/${appgroup_name}_apps_details.json"))
 
-    # Loop through each app ID and perform GET requests
-    for name in "${names[@]}"; do
-      echo "Getting details for App ID: $name"
+  # Parse the app IDs from the app details JSON file using jq
+  names=($(jq -r '.appGroupApps[].name' "$DEST_DIR/${appgroup_name}_apps_details.json"))
+
+  # Loop through each app ID and perform GET requests
+  for name in "${names[@]}"; do
+    echo "Getting details for App ID: $name"
     # Create the JSON payload using data from the environment details file
-    json_payload=$(cat "$DEST_DIR/${appgroup_name}_${name}_app_details.json")
+    json_payload=$(cat "$DEST_DIR/${appgroup_name}_appgroup_${name}_app_details.json")
     # Echo the JSON payload before making the POST request
     echo "JSON Payload:"
     echo "$json_payload"
@@ -40,8 +39,8 @@ for appgroup_name in "${appgroup_names[@]}"; do
       -d "$json_payload" \
       -H "Content-Type: application/json")
     # Save the response for the app details to a file
-    echo "$post_app_response" > "$DEST_DIR/${appgroup_name}_${name}_app_response.json"
+    echo "$post_app_response" >"$DEST_DIR/${appgroup_name}_appgroup_${name}_app_response.json"
 
-    echo "App details saved to $DEST_DIR/${appgroup_name}_${name}_app_response.json"
+    echo "App details saved to $DEST_DIR/${appgroup_name}_appgroup_${name}_app_response.json"
   done
 done

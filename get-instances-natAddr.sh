@@ -23,12 +23,27 @@ instance_names=($(jq -r '.instances[].name' "$DEST_DIR/instances.json"))
 # Loop through the 'instance_name'
 for instance_name in "${instance_names[@]}"; do
   echo "Instance Name: $instance_name"
-  
+
   # Make a GET request using the 'instance_name' as part of the URL
   curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/instances/$instance_name/natAddresses" \
     --header "Authorization: Bearer $SOURCE_TOKEN" \
-    -o "$DEST_DIR/instance_${instance_name}_natAddress_details.json"
+    -o "$DEST_DIR/instance_${instance_name}_natAddrs_details.json"
 
   # Echo a message for each 'instance_name'
   echo "Details for instance name $instance_name have been retrieved."
+  # Use jq to extract the 'name' values from the natAddrs and store them in an array called natAddr_names
+  natAddr_names=($(jq -r '.natAddresses[].name' "$DEST_DIR/instance_${instance_name}_natAddrs_details.json"))
+
+  # Loop through the 'natAddr_names'
+  for natAddr_name in "${natAddr_names[@]}"; do
+    echo "natAddr Name: $natAddr_name"
+
+    # Make a GET request using the 'instance_name' and 'natAddr_name' as part of the URL
+    curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/instances/$instance_name/natAddresses/$natAddr_name" \
+      --header "Authorization: Bearer $SOURCE_TOKEN" \
+      -o "$DEST_DIR/instance_${instance_name}_natAddr_${natAddr_name}_details.json"
+
+    # Echo a message for each 'natAddr_name'
+    echo "Details for natAddr name $natAddr_name have been retrieved."
+  done
 done

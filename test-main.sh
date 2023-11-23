@@ -26,25 +26,22 @@ echo "DEST_DIR: $DEST_DIR"
 # Define an array of script file names
 scripts=(
   # "env"
-  # "env-api-debugsessions"
-  # "kvms"
-
+  # "env-kvms"
   # "instances"
   # "instances-natAddr"
   # "instances-attachments"
-  "env"
   # "env-analytics-exp"
   # "env-archiveDeployments"
   # "env-queries"
   # "env-refs"
   # "env-resourcefiles"
   # "env-securityActions"
-  # "env-securityReports"
+  # "hostSecurityReports"
   # "env-sharedflows-deployments"
   # "env-targetservers"
   # "env-traceconfig-overrides"
-  "env-keystores"
-  "env-keystores-aliases"
+  "kvms"
+  "kvm-entries"
   "err-msgs"
 )
 
@@ -55,7 +52,7 @@ done
 
 if [ $? -ne 0 ]; then
   echo "Error condition detected in get-err-msgs.sh. Stopping execution."
-  exit 1  # Exit with a non-zero code to indicate an error
+  exit 1 # Exit with a non-zero code to indicate an error
 fi
 
 # Run login script
