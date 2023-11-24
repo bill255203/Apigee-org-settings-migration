@@ -24,19 +24,19 @@ curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/hostSecu
 echo "hostSecurityReports list saved to $DEST_DIR/hostSecurityReports.json"
 
 # Parse the hostSecurityReport names from the response
-hostSecurityReports=($(cat "$DEST_DIR/hostSecurityReports.json" | jq -r '.[]'))
+# hostSecurityReports=($(cat "$DEST_DIR/hostSecurityReports.json" | jq -r '.[]'))
 
-# Loop through each hostSecurityReport and perform GET and POST requests
-for hostSecurityReport in "${hostSecurityReports[@]}"; do
-  echo "Processing hostSecurityReport: $hostSecurityReport"
+# # Loop through each hostSecurityReport and perform GET and POST requests
+# for hostSecurityReport in "${hostSecurityReports[@]}"; do
+#   echo "Processing hostSecurityReport: $hostSecurityReport"
 
-  # Make a GET request to get hostSecurityReport details
-  get_hostSecurityReport_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/hostSecurityReports/$hostSecurityReport" -H "Authorization: Bearer $SOURCE_TOKEN")
+#   # Make a GET request to get hostSecurityReport details
+#   get_hostSecurityReport_response=$(curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/hostSecurityReports/$hostSecurityReport" -H "Authorization: Bearer $SOURCE_TOKEN")
 
-  # Save the response for the hostSecurityReport details to a file
-  echo "$get_hostSecurityReport_response" > "$DEST_DIR/${hostSecurityReport}_hostSecurityReport_details.json"
+#   # Save the response for the hostSecurityReport details to a file
+#   echo "$get_hostSecurityReport_response" > "$DEST_DIR/${hostSecurityReport}_hostSecurityReport_details.json"
 
-  echo "hostSecurityReport details saved to $DEST_DIR/${hostSecurityReport}_hostSecurityReport_details.json"
-done
+#   echo "hostSecurityReport details saved to $DEST_DIR/${hostSecurityReport}_hostSecurityReport_details.json"
+# done
 
-echo "hostSecurityReport operations completed."
+# echo "hostSecurityReport operations completed."

@@ -19,12 +19,12 @@ echo "DEST_DIR in env.sh: $DEST_DIR"
 SOURCE_TOKEN=$(gcloud auth print-access-token)
 
 # Parse the api names from the response
-apis=($(cat "$DEST_DIR/apis.json" | jq -r '.[]'))
+apis=($(cat "$DEST_DIR/apis.json" | jq -r '.proxies[].name'))
 
 # Loop through each api and perform GET and POST requests
 for api in "${apis[@]}"; do
     # Use jq to extract the 'name' values and store them in an array called keyvaluemap_name
-    keyvaluemaps=($(jq -r '.keyvaluemaps[].name' "$DEST_DIR/${api}_api_kvm_details.json"))
+    keyvaluemaps=($(jq -r '.[]' "$DEST_DIR/${api}_api_kvm_details.json"))
 
     for keyvaluemap in "${keyvaluemaps[@]}"; do
         echo "keyvaluemap Name: $keyvaluemap"
@@ -32,18 +32,18 @@ for api in "${apis[@]}"; do
         # Make a GET request using the 'keyvaluemap_name' as part of the URL
         curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis/$api/keyvaluemaps/$keyvaluemap/entries" \
             --header "Authorization: Bearer $SOURCE_TOKEN" \
-            -o "$DEST_DIR/api_${api}_kvm_${keyvaluemap}_entries_details.json"
+            -o "$DEST_DIR/${api}_api_${keyvaluemap}_kvm_entries_details.json"
 
         # Echo a message for each 'keyvaluemap_name'
         echo "Details for keyvaluemap name $keyvaluemap have been retrieved."
 
-        entries=($(jq -r '.keyvaluemaps[].name' "$DEST_DIR/keyvaluemaps_${keyvaluemap}_entries_details.json"))
+        entries=($(jq -r '.keyValueEntries[]' "$DEST_DIR/${api}_api_${keyvaluemap}_kvm_entries_details.json"))
 
         for entrie in "${entries[@]}"; do
             # Make a GET request using the 'keyvaluemap_name' as part of the URL
             curl -X GET "https://apigee.googleapis.com/v1/organizations/$SOURCE_ORG/apis/$api/keyvaluemaps/$keyvaluemap/entries/$entrie" \
                 --header "Authorization: Bearer $SOURCE_TOKEN" \
-                -o "$DEST_DIR/api_${api}_kvm_${keyvaluemap}_entries_${entrie}_details.json"
+                -o "$DEST_DIR/${api}_api_${keyvaluemap}_kvm_${entrie}_entries_details.json"
 
         done
     done
